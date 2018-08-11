@@ -1,41 +1,31 @@
-var userName = prompt("Please enter you name below","");
+$(document).ready(function(){
 
-var userQuestion = prompt(Ask the Magic 8-Ball a question","");
+  var magic8Ball = {};
+  magic8Ball.listofanswers = ["It is certain.", "It is decidedly so.", "Without a doubt.", "Yes, definitely.", "You may rely on it.", "As I see it, yes.", "Most likely.", "Outlook good.", "Yes.", "Signs point to yes.", "Reply hazy, try again.", "Ask again later.", "Better not tell you now.", "Cannot predict now.", "Concentrate and ask again.", "Don't count on it.", "My reply is no.", "My sources say no.", "Outlook not so good.", "Very doubtful."];
 
-const randomNumber = Math.floor(Math.random() * 8);
+  magic8Ball.getAnswer = function(question)
+  {
+    var randomNumber = Math.random();
+    var randomAnswer = Math.floor(randomNumber * this.listofanswers.length);
+    var answer = this.listofanswers[randomAnswer];
 
-let eightBall = '';
+    $("#8ball").effect( "shake" );
+    $("#answer").text( answer );
+    $("#answer").fadeIn(3000);
+    $("#8ball").attr("src", "/images/answerside.png");
 
-switch(randomNumber) {
-  case 0:
-    eightBall ='It is certain';
-    break;
-  case 1:
-    eightBall ='It is decidedly so';
-    break;
-  case 2:
-    eightBall ='Reply hazy try again';
-    break;
-  case 3:
-    eightBall ='Cannot predict now';
-    break;
-  case 4:
-    eightBall ='My sources say no';
-    break;
-  case 5:
-    eightBall ='Outlook not so good';
-    break;
-  case 6:
-    eightBall ='Signs point to yes';
-    break;
-  case 7:
-    eightBall ='It is certain';
-    break;
-  case 8:
-    eightBall ='It is certain';
-    break;
-}
+    console.log(question);
+    console.log(answer);
+  };
+  $("#answer").hide();
 
-console.log(userName + " asked:" + userQuestion);
+  var onClick = function()
+  {
+    $("#answer").hide();
+    $("#8ball").attr("src", "/images/magic8ballQuestion.png");
+    var question = prompt("What do you want to know?");
+    magic8Ball.getAnswer(question);
+  };
 
-console.log("The 8-Ball's answer:" + eightBall);
+  $("#questionButton").click( onClick );
+});
